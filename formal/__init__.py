@@ -1,1 +1,1 @@
-﻿"""Formal reduction package for the Goldbach proof repository."""
+"""Formal reduction package for the Goldbach proof repository."""

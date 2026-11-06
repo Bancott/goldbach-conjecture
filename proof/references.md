@@ -1,4 +1,4 @@
-﻿# 参考文献与引用说明
+# 参考文献与引用说明
 
 本文使用以下文献。标准圆法与大筛的陈述取自 Davenport、Vaughan 与 Iwaniec-Kowalski。有限验证取自 Oliveira e Silva、Herzog 与 Pardi 的公开计算。核心双线性估计取自 Petrov-Tanaka。
 
