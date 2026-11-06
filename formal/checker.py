@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Sound checker for the formal reduction certificate.
 
 The checker verifies the logical reduction from the major-arc lower bound,
@@ -158,16 +158,3 @@ def verify_certificate(path: str | Path) -> Dict[str, Any]:
         "X0": constants["X0"],
         "local_X": constants["local_X"],
     }
-
-
-def main(argv: List[str]) -> int:
-    if len(argv) != 2:
-        print("usage: python formal/checker.py formal/proof.json", file=sys.stderr)
-        return 2
-    try:
-        result = verify_certificate(argv[1])
-    except CertificateError as exc:
-        print(json.dumps({"status": "FAIL", "error": str(exc)}, ensure_ascii=False, indent=2))
-        return 1
-    print(json.dumps(result, ensure_ascii=False, indent=2))
-    return 0
