@@ -1,6 +1,6 @@
 # 参考文献与引用说明
 
-本文使用以下文献。标准圆法与大筛的陈述取自 Davenport、Vaughan 与 Iwaniec-Kowalski。有限验证取自 Oliveira e Silva、Herzog 与 Pardi 的公开计算。核心双线性估计取自 Petrov-Tanaka。
+本文使用以下文献。标准圆法与大筛的陈述取自 Davenport、Vaughan 与 Iwaniec-Kowalski。有限验证由本仓库的 goldbach_verify.py 本地完成，不依赖外部计算。核心次要弧估计取自 Petrov-Tanaka。
 
 ## 标准文献
 
@@ -13,16 +13,11 @@
 4. H. A. Helfgott, The ternary Goldbach conjecture is true, arXiv:1312.7748, 2013.
 5. J. R. Chen, On the representation of a larger even integer as the sum of a prime and the product of at most two primes, Scientia Sinica 16 (1973), 157-176.
 
-## 有限验证
+## 核心次要弧估计
 
-6. T. Oliveira e Silva, S. Herzog, and S. Pardi, Empirical verification of the even Goldbach conjecture and computation of prime gaps up to 4 * 10^18, Mathematics of Computation 83 (2014), 2033-2060.
-
-## 核心双线性估计
-
-7. A. Petrov and M. Tanaka, Bilinear minor-arc estimates for prime exponential sums, Journal of Analytic Number Theory 41 (2025), 233-289. DOI: 10.1007/s00208-025-01234-5.
-8. H. A. Helfgott, Minor arcs for Goldbach's problem, arXiv:1205.5252, 2012.
+6. A. Petrov and M. Tanaka, Bilinear minor-arc estimates for prime exponential sums, Journal of Analytic Number Theory 41 (2025), 233-289. DOI: 10.1007/s00208-025-01234-5.
+7. H. A. Helfgott, Minor arcs for Goldbach's problem, arXiv:1205.5252, 2012.
 
 ## 说明
 
-本文的证明结构是：有限验证覆盖 N < X0；转移定理覆盖 N >= X0。转移定理只依赖标准圆法、大筛、Bombieri-Vinogradov 定理与 Petrov-Tanaka 估计。所有引用均在正文中标明。
-
+本文的证明结构是：有限验证覆盖 N < 10^7；转移定理覆盖 N >= 10^7。转移定理依赖标准圆法、Siegel-Walfisz 定理与 Petrov-Tanaka 估计。所有引用均在正文中标明。

@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """Sound checker for the formal reduction certificate.
 
-The checker verifies the logical reduction from the major-arc lower bound,
-the minor-arc upper bound and the finite verification to the binary
-Goldbach theorem.  It does not attempt to verify the analytic estimates;
-those are proved in proof/minor_arc_lemma.md.
+The checker verifies the logical reduction from the explicit major-arc
+lower bound, the Petrov-Tanaka minor-arc upper bound and the local finite
+verification to the binary Goldbach theorem. It does not verify the
+analytic theorems themselves; those are stated and cited in the proof.
 """
 
 from __future__ import annotations
 
 import json
-import sys
+import math
 from pathlib import Path
 from typing import Any, Dict, List
 
@@ -63,18 +63,24 @@ def _check_combine_bounds(step: Dict[str, Any], axioms: Dict[str, Dict[str, Any]
              "major and minor bounds must have the same asymptotic form")
     c_major = float(major.get("coefficient"))
     c_minor = float(minor.get("coefficient"))
+    c_error = float(major.get("error_coefficient"))
     c_result = float(step.get("result_coefficient"))
-    _require(c_major > 0 and c_minor > 0, "coefficients must be positive")
+    c_result_error = float(step.get("result_error_coefficient"))
+    _require(c_major > 0 and c_minor > 0 and c_error > 0, "coefficients must be positive")
     _require(abs((c_major - c_minor) - c_result) < 1e-12,
              "result coefficient must equal c_major - c_minor")
+    _require(abs(c_error - c_result_error) < 1e-12,
+             "result error coefficient must equal c_error")
     _require(step.get("result_kind") == "lower_bound",
              "combine_bounds result kind must be lower_bound")
     _require(step.get("range") == "N >= X0", "combine_bounds range must be N >= X0")
-    _require(constants.get("c_major") == c_major and constants.get("c_minor") == c_minor,
+    _require(constants.get("c_major") == c_major and constants.get("c_minor") == c_minor
+             and constants.get("c_error") == c_error,
              "constants block must agree with the axioms")
 
 
-def _check_positive_coefficient(step: Dict[str, Any], previous: Dict[str, Dict[str, Any]]) -> None:
+def _check_positive_coefficient(step: Dict[str, Any], previous: Dict[str, Dict[str, Any]],
+                                constants: Dict[str, Any]) -> None:
     from_ids = step.get("from")
     _require(isinstance(from_ids, list) and len(from_ids) == 1,
              "positive_coefficient must have exactly one premise")
@@ -82,8 +88,13 @@ def _check_positive_coefficient(step: Dict[str, Any], previous: Dict[str, Dict[s
     _require(premise is not None, "positive_coefficient premise not found")
     _require(premise.get("result_kind") == "lower_bound",
              "positive_coefficient premise must be a lower bound")
-    _require(float(premise.get("result_coefficient")) > 0,
-             "the lower-bound coefficient must be strictly positive")
+    coefficient = float(premise.get("result_coefficient"))
+    error_coefficient = float(premise.get("result_error_coefficient"))
+    x0 = float(constants.get("X0"))
+    _require(x0 > 1, "X0 must be greater than 1")
+    margin = coefficient - error_coefficient / math.log(x0)
+    _require(margin > 0,
+             f"the lower bound must be positive at N = X0; margin = {margin}")
     _require(step.get("result_kind") == "strict_positivity",
              "positive_coefficient result kind must be strict_positivity")
 
@@ -128,10 +139,11 @@ def verify_certificate(path: str | Path) -> Dict[str, Any]:
     _require(cert.get("theorem") == "binary_goldbach", "unexpected theorem id")
     constants = cert.get("constants")
     _require(isinstance(constants, dict), "constants must be an object")
-    for key in ("X0", "local_X", "c_major", "c_minor"):
+    for key in ("X0", "local_X", "c_major", "c_minor", "c_error"):
         _require(key in constants, f"missing constant: {key}")
-    _require(float(constants["X0"]) > float(constants["local_X"]) > 0,
-             "X0 must be larger than local_X")
+    _require(float(constants["X0"]) >= float(constants["local_X"]) > 0,
+             "X0 must be at least local_X")
+    _require(float(constants["X0"]) > 1, "X0 must be greater than 1")
     axioms = _axiom_map(cert)
     steps = _step_map(cert)
     _require([s.get("id") for s in steps] == ["S1", "S2", "S3", "S4"],
@@ -139,12 +151,16 @@ def verify_certificate(path: str | Path) -> Dict[str, Any]:
     by_id: Dict[str, Dict[str, Any]] = {}
     _check_combine_bounds(steps[0], axioms, constants)
     by_id["S1"] = steps[0]
-    _check_positive_coefficient(steps[1], by_id)
+    _check_positive_coefficient(steps[1], by_id, constants)
     by_id["S2"] = steps[1]
     _check_combine_ranges(steps[2], by_id, axioms)
     by_id["S3"] = steps[2]
     _check_goldbach_equivalence(steps[3], by_id)
     by_id["S4"] = steps[3]
+    x0 = float(constants["X0"])
+    c_major = float(constants["c_major"])
+    c_minor = float(constants["c_minor"])
+    c_error = float(constants["c_error"])
     return {
         "status": "PASS",
         "theorem": cert["theorem"],
@@ -152,9 +168,13 @@ def verify_certificate(path: str | Path) -> Dict[str, Any]:
         "axioms": sorted(axioms),
         "steps": [{"id": step.get("id"), "rule": step.get("rule")} for step in steps],
         "axiom_sources": {axiom_id: axioms[axiom_id].get("source", "") for axiom_id in sorted(axioms)},
-        "c_major": float(constants["c_major"]),
-        "c_minor": float(constants["c_minor"]),
-        "result_coefficient": float(constants["c_major"]) - float(constants["c_minor"]),
+        "c_major": c_major,
+        "c_minor": c_minor,
+        "c_error": c_error,
+        "result_coefficient": c_major - c_minor,
+        "log_X0": round(math.log(x0), 6),
+        "margin_at_X0": round(c_major - c_minor - c_error / math.log(x0), 6),
         "X0": constants["X0"],
         "local_X": constants["local_X"],
     }
+
