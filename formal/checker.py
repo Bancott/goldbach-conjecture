@@ -1,4 +1,4 @@
-﻿#!/usr/bin/env python3
+#!/usr/bin/env python3
 """Sound checker for the formal reduction certificate.
 
 The checker verifies the logical reduction from the major-arc lower bound,
