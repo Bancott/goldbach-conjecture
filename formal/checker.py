@@ -150,6 +150,8 @@ def verify_certificate(path: str | Path) -> Dict[str, Any]:
         "theorem": cert["theorem"],
         "steps_checked": len(steps),
         "axioms": sorted(axioms),
+        "steps": [{"id": step.get("id"), "rule": step.get("rule")} for step in steps],
+        "axiom_sources": {axiom_id: axioms[axiom_id].get("source", "") for axiom_id in sorted(axioms)},
         "c_major": float(constants["c_major"]),
         "c_minor": float(constants["c_minor"]),
         "result_coefficient": float(constants["c_major"]) - float(constants["c_minor"]),

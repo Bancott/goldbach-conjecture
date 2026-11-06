@@ -94,6 +94,7 @@ def proof_document_digests() -> Dict[str, str]:
         ROOT / "proof" / "minor_arc_lemma.md",
         ROOT / "proof" / "numerical_table.md",
         ROOT / "proof" / "references.md",
+        ROOT / "formal" / "README.md",
         ROOT / "formal" / "proof.json",
         ROOT / "formal" / "checker.py",
     ]

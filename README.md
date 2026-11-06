@@ -35,6 +35,7 @@ python goldbach_verify.py
 | proof/numerical_table.md | 表示数与主项的数值表 |
 | proof/references.md | 引用与文献说明 |
 | formal/proof.json | 形式化归约证书 |
+| formal/README.md | 形式化归约的说明 |
 | formal/checker.py | 归约证书检查器 |
 | goldbach_verify.py | 入口：有限验证 + 形式化检查 |
 
