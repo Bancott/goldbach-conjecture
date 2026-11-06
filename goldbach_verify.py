@@ -9,16 +9,12 @@ optional documentation folders.
 
 from __future__ import annotations
 
-import hashlib
 import json
 import math
-import sys
 import time
-from pathlib import Path
 from typing import Any, Dict, List
 
 
-ROOT = Path(__file__).resolve().parent
 LOCAL_X = 1_000_000
 
 
@@ -289,29 +285,6 @@ def verify_even_goldbach(limit: int) -> Dict[str, Any]:
     }
 
 
-def sha256_file(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1 << 20), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
-
-
-def proof_document_digests() -> Dict[str, str]:
-    paths = [
-        ROOT / "README.md",
-        ROOT / "proof" / "goldbach_proof.md",
-        ROOT / "proof" / "minor_arc_lemma.md",
-        ROOT / "proof" / "numerical_table.md",
-        ROOT / "proof" / "references.md",
-        ROOT / "formal" / "README.md",
-        ROOT / "formal" / "proof.json",
-        ROOT / "formal" / "checker.py",
-    ]
-    return {str(path.relative_to(ROOT)).replace("\\", "/"): sha256_file(path)
-            for path in paths if path.is_file()}
-
-
 def main() -> int:
     started = time.time()
     finite = verify_even_goldbach(LOCAL_X)
@@ -327,7 +300,6 @@ def main() -> int:
         "components": {
             "local_finite_verification": finite,
             "formal_reduction": formal,
-            "proof_document_sha256": proof_document_digests(),
         },
         "elapsed_sec": round(time.time() - started, 3),
         "status": "VERIFIED" if finite.get("status") == "PASS" and formal_ok else "FAILED",
