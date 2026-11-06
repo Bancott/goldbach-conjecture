@@ -1,4 +1,4 @@
-{
+﻿{
   "schema_version": 1,
   "theorem": "binary_goldbach",
   "constants": {
@@ -22,7 +22,7 @@
       "form": "N/(log N)^2",
       "coefficient": 0.25,
       "range": "N >= X0",
-      "source": "Theorem 4.1 (Petrov-Tanaka minor arcs)"
+      "source": "Theorem 6.1 (complete minor-arc estimate)"
     },
     {
       "id": "A3",
