@@ -20,6 +20,7 @@
 ## 核心双线性估计
 
 7. A. Petrov and M. Tanaka, Bilinear minor-arc estimates for prime exponential sums, Journal of Analytic Number Theory 41 (2025), 233-289. DOI: 10.1007/s00208-025-01234-5.
+8. H. A. Helfgott, Minor arcs for Goldbach's problem, arXiv:1205.5252, 2012.
 
 ## 说明
 

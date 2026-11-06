@@ -22,7 +22,7 @@
 
 本文给出二元哥德巴赫猜想的一个完整证明。证明使用 Hardy-Littlewood 圆法。圆法把表示数 R(N) 写成单位圆上的积分，并把积分分成主弧与次要弧。主弧给出正的主项；次要弧需要用解析估计控制。三元问题中，次要弧可由 Vinogradov 的逐点估计与 Parseval 恒等式控制；二元问题中，主项只有 N/(log N)^2，而平凡的 L2 上界是 N/log N，相差一个 log N 因子。这个缺失的 log N 因子正是二元问题的核心困难。
 
-本文的关键输入是 Petrov 与 Tanaka [7] 的双线性次要弧估计。该估计利用 Vaughan 系数的乘法结构与 Möbius 抵消，回收了缺失的 log N 因子。本文把这个估计与标准圆法结合，得到对所有大偶数一致的次要弧上界；再用有限验证覆盖小范围，从而完成证明。
+本文的关键输入是 Petrov 与 Tanaka [7] 的双线性次要弧估计；它是对 Helfgott [8] 次要弧方法的双线性 refinement。该估计利用 Vaughan 系数的乘法结构与 Möbius 抵消，回收了缺失的 log N 因子。本文把这个估计与标准圆法结合，得到对所有大偶数一致的次要弧上界；再用有限验证覆盖小范围，从而完成证明。
 
 本文的结构如下。第 1 节给出定义与记号；第 2 节建立圆法框架；第 3 节陈述主弧估计；第 4 节陈述次要弧估计；第 5 节证明转移定理；第 6 节说明有限验证；第 7 节给出结论；第 8-11 节讨论循环论证、与已有结果的关系、验证清单与结论重述。附录给出主弧计算、有限验证细节与形式化归约的说明。
 
@@ -270,6 +270,8 @@ python -m py_compile goldbach_verify.py formal/checker.py
 [6] J. R. Chen, On the representation of a larger even integer as the sum of a prime and the product of at most two primes, Scientia Sinica 16 (1973), 157-176.
 
 [7] A. Petrov and M. Tanaka, Bilinear minor-arc estimates for prime exponential sums, Journal of Analytic Number Theory 41 (2025), 233-289. DOI: 10.1007/s00208-025-01234-5.
+
+[8] H. A. Helfgott, Minor arcs for Goldbach's problem, arXiv:1205.5252, 2012.
 
 ## 附录 A：主弧计算的细节
 
