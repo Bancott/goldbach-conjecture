@@ -1,6 +1,8 @@
 {
   "schema_version": 1,
   "theorem": "binary_goldbach",
+  "conditional": true,
+  "dependency": "[6, Theorem 1.3] (Petrov-Tanaka minor-arc estimate)",
   "constants": {
     "X0": 10000000,
     "local_X": 10000000,

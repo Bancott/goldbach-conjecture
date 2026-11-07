@@ -164,6 +164,8 @@ def verify_certificate(path: str | Path) -> Dict[str, Any]:
     return {
         "status": "PASS",
         "theorem": cert["theorem"],
+        "conditional": bool(cert.get("conditional", False)),
+        "dependency": cert.get("dependency", ""),
         "steps_checked": len(steps),
         "axioms": sorted(axioms),
         "steps": [{"id": step.get("id"), "rule": step.get("rule")} for step in steps],
