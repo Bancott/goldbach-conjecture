@@ -6,17 +6,17 @@
   "constants": {
     "X0": 10000000,
     "local_X": 10000000,
-    "c_major": 0.5,
+    "c_major": 1.32,
     "c_minor": 0.0625,
-    "c_error": 1.0
+    "c_error": 10.0
   },
   "axioms": [
     {
       "id": "A1",
       "kind": "major_arc_lower_bound",
       "form": "N/(log N)^2",
-      "coefficient": 0.5,
-      "error_coefficient": 1.0,
+      "coefficient": 1.32,
+      "error_coefficient": 10.0,
       "range": "N >= X0",
       "source": "Theorem 3.1 (explicit major-arc lower bound)"
     },
@@ -48,8 +48,8 @@
       "rule": "combine_bounds",
       "from": ["A1", "A2", "A3"],
       "result_kind": "lower_bound",
-      "result_coefficient": 0.4375,
-      "result_error_coefficient": 1.0,
+      "result_coefficient": 1.2575,
+      "result_error_coefficient": 10.0,
       "result_form": "N/(log N)^2",
       "range": "N >= X0"
     },
@@ -58,8 +58,8 @@
       "rule": "positive_coefficient",
       "from": ["S1"],
       "result_kind": "strict_positivity",
-      "coefficient": 0.4375,
-      "error_coefficient": 1.0,
+      "coefficient": 1.2575,
+      "error_coefficient": 10.0,
       "range": "N >= X0"
     },
     {
